@@ -25,22 +25,40 @@ button{font:inherit}.wrap{max-width:1120px;margin:auto;padding:22px}.top{display
 <section id="result" class="screen"><div class="panel center"><div class="eyebrow">MISSÃO CONCLUÍDA</div><div style="font-size:58px;margin:8px">🏆</div><div class="rank" id="rank"></div><p id="message"></p><div class="stats"><div class="stat">XP TOTAL<b id="score"></b></div><div class="stat">ACERTOS<b id="hits"></b></div><div class="stat">ERROS<b id="misses"></b></div><div class="stat">MELHOR COMBO<b id="best"></b></div></div><div class="result-author">DESAFIO ALEMANHA • Desenvolvido por <strong>Warley</strong> • Turma <span>1908</span></div><div class="actions" style="justify-content:center"><button class="btn primary" onclick="begin(0)">REFAZER MISSÃO</button><button class="btn secondary" onclick="home()">TELA INICIAL</button></div></div></section>
 </div>
 <script>
-const Q=[
-["Qual é a capital da Alemanha?",["Munique","Berlim","Hamburgo","Frankfurt"],1,"Berlim é a capital e uma das cidades mais importantes da Alemanha.","BERLIM"],
-["Com quantos países a Alemanha faz fronteira terrestre?",["6","7","9","12"],2,"A Alemanha faz fronteira com nove países europeus.","ALEMANHA"],
-["Em que ano caiu o Muro de Berlim?",["1975","1989","1991","1999"],1,"A queda do Muro ocorreu em 9 de novembro de 1989.","BERLIM"],
-["Em que ano ocorreu a reunificação alemã?",["1987","1989","1990","1995"],2,"A reunificação foi oficializada em 3 de outubro de 1990.","BERLIM"],
-["Qual é o idioma oficial da Alemanha?",["Alemão","Holandês","Dinamarquês","Polonês"],0,"O alemão é a língua oficial predominante do país.","BAVIERA"],
-["Qual festival tradicional é famoso em Munique?",["Carnaval de Veneza","Oktoberfest","Diwali","Hanami"],1,"A Oktoberfest é um dos maiores festivais populares do mundo.","MUNIQUE"],
-["Em qual cidade nasceu Albert Einstein?",["Berlim","Ulm","Colônia","Dresden"],1,"Albert Einstein nasceu em Ulm em 1879.","ALEMANHA"],
-["Qual destas marcas é alemã?",["Toyota","BMW","Ford","Peugeot"],1,"BMW é uma fabricante alemã de automóveis e motocicletas.","ALEMANHA"],
-["Em que ano a Alemanha venceu a Copa do Mundo no Brasil?",["2006","2010","2014","2018"],2,"A Alemanha venceu a Argentina por 1 a 0 na final de 2014.","ALEMANHA"],
-["Qual alimento é um clássico da culinária alemã?",["Brezel","Taco","Sushi","Croissant"],0,"O Brezel, ou pretzel, é um clássico da culinária alemã.","BAVIERA"],
-["Em qual estado fica o Castelo de Neuschwanstein?",["Baviera","Saxônia","Hesse","Sarre"],0,"O famoso castelo fica na Baviera, no sul da Alemanha.","BAVIERA"],
+const BANK={
+BERLIM:[
+["Qual é a capital da Alemanha?",["Munique","Berlim","Hamburgo","Frankfurt"],1,"Berlim é a capital da Alemanha.","BERLIM"],
+["Em que ano caiu o Muro de Berlim?",["1975","1989","1991","1999"],1,"O Muro de Berlim caiu em 9 de novembro de 1989.","BERLIM"],
+["Em que ano ocorreu a reunificação alemã?",["1987","1989","1990","1995"],2,"A reunificação alemã aconteceu oficialmente em 3 de outubro de 1990.","BERLIM"],
+["Qual famoso portão fica em Berlim?",["Portão de Brandemburgo","Portão de Roma","Portão de Paris","Portão de Viena"],0,"O Portão de Brandemburgo é um dos principais símbolos de Berlim.","BERLIM"],
+["Qual prédio abriga o Parlamento Federal alemão em Berlim?",["Reichstag","Bundestag Palace","Palácio de Berlim","Neue Hall"],0,"O Reichstag é a sede do Parlamento Federal alemão.","BERLIM"],
+["Qual memorial em Berlim lembra as vítimas do Holocausto?",["Memorial aos Judeus Assassinados da Europa","Memorial de Potsdam","Muro da Paz","Praça da Unidade"],0,"O Memorial aos Judeus Assassinados da Europa fica no centro de Berlim.","BERLIM"],
+["Qual rio atravessa Berlim?",["Reno","Danúbio","Spree","Elba"],2,"O rio Spree atravessa Berlim.","BERLIM"],
+["Qual praça é uma das mais famosas de Berlim?",["Alexanderplatz","Marienplatz","Römerberg","Altmarkt"],0,"A Alexanderplatz é um dos pontos mais conhecidos de Berlim.","BERLIM"]
+],
+BAVIERA:[
+["Qual festival tradicional é famoso em Munique?",["Carnaval de Veneza","Oktoberfest","Diwali","Hanami"],1,"A Oktoberfest é um dos maiores festivais populares do mundo.","BAVIERA"],
+["Em qual estado fica o Castelo de Neuschwanstein?",["Baviera","Saxônia","Hesse","Sarre"],0,"O Castelo de Neuschwanstein fica na Baviera.","BAVIERA"],
+["Qual é a capital da Baviera?",["Nuremberg","Augsburg","Munique","Würzburg"],2,"Munique é a capital do estado da Baviera.","BAVIERA"],
+["Qual alimento é um clássico da culinária bávara?",["Brezel","Sushi","Taco","Curry"],0,"O Brezel é um clássico da culinária da Baviera e da Alemanha.","BAVIERA"],
+["Qual time de futebol é de Munique?",["Borussia Dortmund","Bayern de Munique","Bayer Leverkusen","RB Leipzig"],1,"O Bayern de Munique é o principal clube da cidade.","BAVIERA"],
+["O Castelo de Neuschwanstein inspirou qual famoso castelo da Disney?",["Castelo da Cinderela","Castelo da Bela Adormecida","Castelo de Frozen","Castelo de Aladdin"],1,"Sua aparência ajudou a inspirar o castelo associado à Bela Adormecida.","BAVIERA"],
+["Qual bebida é tradicionalmente associada à Oktoberfest?",["Café","Chá","Cerveja","Suco"],2,"A cerveja é uma das bebidas tradicionalmente associadas à Oktoberfest.","BAVIERA"],
+["Qual cidade da Baviera é famosa pelo centro histórico e pelo castelo imperial?",["Nuremberg","Bremen","Colônia","Hamburgo"],0,"Nuremberg é uma importante cidade histórica da Baviera.","BAVIERA"]
+],
+ALEMANHA:[
+["Com quantos países a Alemanha faz fronteira terrestre?",["6","7","9","12"],2,"A Alemanha faz fronteira terrestre com nove países.","ALEMANHA"],
+["Qual é o idioma oficial da Alemanha?",["Alemão","Holandês","Dinamarquês","Polonês"],0,"O alemão é a língua oficial predominante do país.","ALEMANHA"],
+["Em qual cidade nasceu Albert Einstein?",["Berlim","Ulm","Colônia","Dresden"],1,"Albert Einstein nasceu em Ulm, em 1879.","ALEMANHA"],
+["Qual destas marcas é alemã?",["Toyota","BMW","Ford","Peugeot"],1,"A BMW é uma fabricante alemã de automóveis e motocicletas.","ALEMANHA"],
+["Em que ano a Alemanha venceu a Copa do Mundo no Brasil?",["2006","2010","2014","2018"],2,"A Alemanha venceu a Argentina na final da Copa de 2014, no Brasil.","ALEMANHA"],
 ["Qual moeda é usada na Alemanha?",["Franco","Libra","Euro","Coroa"],2,"A Alemanha utiliza o euro como moeda oficial.","ALEMANHA"],
-["Qual rio passa por cidades como Colônia e Düsseldorf?",["Danúbio","Reno","Elba","Sena"],1,"O Reno é um dos rios mais importantes da Europa.","COLÔNIA"],
-["Anders Celsius era de qual país?",["Alemanha","Áustria","Suécia","Suíça"],2,"Celsius era sueco. Uma pegadinha para testar sua atenção.","ALEMANHA"],
-["Em que data é celebrado o Dia da Unidade Alemã?",["1º de maio","3 de outubro","9 de novembro","25 de dezembro"],1,"O Dia da Unidade Alemã é celebrado em 3 de outubro.","ALEMANHA"]];
+["Qual rio é um dos mais importantes da Alemanha e passa por Colônia?",["Danúbio","Reno","Sena","Tâmisa"],1,"O Reno passa por cidades importantes como Colônia e Düsseldorf.","ALEMANHA"],
+["Em qual continente fica a Alemanha?",["Ásia","Europa","África","América"],1,"A Alemanha está localizada na Europa Central.","ALEMANHA"],
+["Qual é o nome oficial do país em alemão?",["Deutschland","Germania","Deutschlandia","Bundesland"],0,"Deutschland é o nome da Alemanha em alemão.","ALEMANHA"],
+["Qual cientista alemão formulou a teoria da relatividade?",["Albert Einstein","Isaac Newton","Galileu Galilei","Nikola Tesla"],0,"Albert Einstein desenvolveu as teorias da relatividade.","ALEMANHA"]
+]};
+let Q=[];
 let s={i:0,score:0,hits:0,misses:0,combo:0,best:0,time:20,locked:false,interval:null};let audio=null;
 function sound(t){try{audio=audio||new(window.AudioContext||window.webkitAudioContext)();let o=audio.createOscillator(),g=audio.createGain(),n=audio.currentTime,cf={click:520,correct:680,wrong:180,next:420,finish:540}[t]||440;o.type=t==="wrong"?"sawtooth":"sine";o.frequency.setValueAtTime(cf,n);if(t==="correct")o.frequency.exponentialRampToValueAtTime(920,n+.15);if(t==="wrong")o.frequency.exponentialRampToValueAtTime(80,n+.2);if(t==="finish"){o.frequency.setValueAtTime(700,n+.13);o.frequency.setValueAtTime(900,n+.26)}g.gain.setValueAtTime(.0001,n);g.gain.exponentialRampToValueAtTime(.1,n+.01);g.gain.exponentialRampToValueAtTime(.0001,n+.25);o.connect(g);g.connect(audio.destination);o.start();o.stop(n+.28)}catch(e){}}
 function toast(t){let x=document.getElementById("toast");x.textContent=t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),1300)}
@@ -48,8 +66,16 @@ function show(id){document.querySelectorAll(".screen").forEach(x=>x.style.displa
 function full(){document.documentElement.requestFullscreen?.();sound("click")}
 function home(){clearInterval(s.interval);show("home")}
 function intro(){sound("click");show("intro")}
-function begin(start){sound("click");s={i:start,score:0,hits:0,misses:0,combo:0,best:0,time:20,locked:false,interval:null};show("quiz");render()}
-function render(){let q=Q[s.i];s.locked=false;s.time=20;document.getElementById("count").textContent="MISSÃO "+String(s.i+1).padStart(2,"0")+"/15";document.getElementById("timer").textContent=20;document.getElementById("fill").style.width=(s.i/15*100)+"%";document.getElementById("xp").textContent="XP "+s.score;document.getElementById("combo").textContent="COMBO x"+s.combo;document.getElementById("zone").textContent=q[4];document.getElementById("question").textContent=q[0];document.getElementById("feedback").innerHTML="";document.getElementById("next").style.display="none";let box=document.getElementById("options");box.innerHTML="";q[1].forEach((a,n)=>{let b=document.createElement("button");b.className="opt";b.textContent=String.fromCharCode(65+n)+". "+a;b.onclick=()=>answer(n);box.appendChild(b)});clearInterval(s.interval);s.interval=setInterval(()=>{s.time--;document.getElementById("timer").textContent=s.time;if(s.time<=0){clearInterval(s.interval);answer(-1)}},1000)}
+function pickRandom(arr,n){return [...arr].sort(()=>Math.random()-.5).slice(0,n)}
+function shuffle(arr){return [...arr].sort(()=>Math.random()-.5)}
+function buildMission(){
+const berlim=pickRandom(BANK.BERLIM,5);
+const baviera=pickRandom(BANK.BAVIERA,5);
+const alemanha=pickRandom(BANK.ALEMANHA,5);
+Q=shuffle([...berlim,...baviera,...alemanha]);
+}
+function begin(start){sound("click");buildMission();s={i:0,score:0,hits:0,misses:0,combo:0,best:0,time:20,locked:false,interval:null};show("quiz");render()}
+function render(){let q=Q[s.i];s.locked=false;s.time=20;document.getElementById("count").textContent="MISSÃO "+String(s.i+1).padStart(2,"0")+"/"+Q.length;document.getElementById("timer").textContent=20;document.getElementById("fill").style.width=(s.i/15*100)+"%";document.getElementById("xp").textContent="XP "+s.score;document.getElementById("combo").textContent="COMBO x"+s.combo;document.getElementById("zone").textContent=q[4];document.getElementById("question").textContent=q[0];document.getElementById("feedback").innerHTML="";document.getElementById("next").style.display="none";let box=document.getElementById("options");box.innerHTML="";q[1].forEach((a,n)=>{let b=document.createElement("button");b.className="opt";b.textContent=String.fromCharCode(65+n)+". "+a;b.onclick=()=>answer(n);box.appendChild(b)});clearInterval(s.interval);s.interval=setInterval(()=>{s.time--;document.getElementById("timer").textContent=s.time;if(s.time<=0){clearInterval(s.interval);answer(-1)}},1000)}
 function answer(n){if(s.locked)return;s.locked=true;clearInterval(s.interval);let q=Q[s.i],ok=n===q[2];sound(ok?"correct":"wrong");if(ok){let bonus=Math.min(50,s.time*3);s.score+=100+bonus+s.combo*25;s.hits++;s.combo++;s.best=Math.max(s.best,s.combo);toast("✓ +"+(100+bonus+(s.combo-1)*25)+" XP")}else{s.misses++;s.combo=0;toast("✕ COMBO PERDIDO")}document.querySelectorAll(".opt").forEach((b,i)=>{b.disabled=true;if(i===q[2])b.classList.add("correct");if(i===n&&!ok)b.classList.add("wrong")});document.getElementById("xp").textContent="XP "+s.score;document.getElementById("combo").textContent="COMBO x"+s.combo;document.getElementById("feedback").innerHTML="<b>"+(ok?"✓ RESPOSTA CORRETA":"✕ RESPOSTA INCORRETA")+"</b><br>"+q[3];document.getElementById("next").style.display="block";document.getElementById("fill").style.width=((s.i+1)/15*100)+"%"}
 function next(){sound("next");s.i++;if(s.i>=Q.length)result();else render()}
 function result(){clearInterval(s.interval);sound("finish");show("result");let r=s.score>=1800?"EXPLORADOR SUPREMO":s.score>=1300?"MESTRE DA ALEMANHA":s.score>=850?"VIAJANTE CURIOSO":"APRENDIZ";document.getElementById("rank").textContent=r;document.getElementById("message").textContent="Você completou sua viagem pela Alemanha. Agora tente superar seu próprio recorde.";document.getElementById("score").textContent=s.score;document.getElementById("hits").textContent=s.hits;document.getElementById("misses").textContent=s.misses;document.getElementById("best").textContent=s.best}
