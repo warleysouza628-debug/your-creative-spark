@@ -16,7 +16,7 @@ button{font:inherit}.wrap{max-width:1120px;margin:auto;padding:22px}.top{display
 
 /* CINEMATIC / PRESENTATION UPGRADE */
 #cinematic{position:fixed;inset:0;z-index:999;background:#030405;display:none;align-items:center;justify-content:center;overflow:hidden}
-#cinematic.active{display:flex;animation:cinFade .35s ease}
+#cinematic.active{display:flex!important;visibility:visible!important;opacity:1!important;animation:cinFade .35s ease}
 .cine-grid{position:absolute;inset:0;background-image:linear-gradient(#ffffff08 1px,transparent 1px),linear-gradient(90deg,#ffffff08 1px,transparent 1px);background-size:55px 55px;mask-image:linear-gradient(#000,transparent 90%);animation:cineGrid 5s linear infinite}
 .cine-glow{position:absolute;width:55vw;height:55vw;border-radius:50%;background:var(--red);filter:blur(110px);opacity:.12;animation:cinePulse 2.8s ease-in-out infinite}
 .cine-center{position:relative;text-align:center;width:min(900px,90vw);z-index:2}
@@ -117,7 +117,7 @@ function show(id){document.querySelectorAll(".screen").forEach(x=>x.style.displa
 function full(){document.documentElement.requestFullscreen?.();sound("click")}
 function home(){clearInterval(s.interval);document.getElementById("cinematic").classList.remove("active");show("home")}
 function cityInfo(el,desc){const card=document.getElementById("cityCard");document.querySelectorAll(".city").forEach(x=>x.classList.remove("selected"));el.classList.add("selected");card.innerHTML="<b>"+el.dataset.name+"</b><span>"+desc+"</span>";card.style.left=Math.min(Math.max(el.offsetLeft+18,12),420)+"px";card.style.top=Math.max(el.offsetTop-18,35)+"px";card.classList.add("show");setTimeout(()=>card.classList.remove("show"),2200);sound("click")}
-function intro(){sound("click");const el=document.getElementById("cinematic");el.classList.add("active");el.setAttribute("aria-hidden","false");setTimeout(()=>{el.classList.remove("active");el.setAttribute("aria-hidden","true");show("intro")},2600)}
+function intro(){sound("click");const el=document.getElementById("cinematic");if(!el){show("intro");return}el.style.display="flex";el.classList.add("active");el.setAttribute("aria-hidden","false");setTimeout(()=>{el.classList.remove("active");el.style.display="none";el.setAttribute("aria-hidden","true");show("intro")},1900)}
 function pickRandom(arr,n){return [...arr].sort(()=>Math.random()-.5).slice(0,n)}
 function shuffle(arr){return [...arr].sort(()=>Math.random()-.5)}
 function buildMission(){
