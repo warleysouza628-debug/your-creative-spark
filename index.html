@@ -69,9 +69,9 @@ function intro(){sound("click");show("intro")}
 function pickRandom(arr,n){return [...arr].sort(()=>Math.random()-.5).slice(0,n)}
 function shuffle(arr){return [...arr].sort(()=>Math.random()-.5)}
 function buildMission(){
-const berlim=pickRandom(BANK.BERLIM,5);
-const baviera=pickRandom(BANK.BAVIERA,5);
-const alemanha=pickRandom(BANK.ALEMANHA,5);
+const berlim=pickRandom(BANK.BERLIM,10);
+const baviera=pickRandom(BANK.BAVIERA,10);
+const alemanha=pickRandom(BANK.ALEMANHA,10);
 Q=shuffle([...berlim,...baviera,...alemanha]);
 }
 function begin(start){sound("click");buildMission();s={i:0,score:0,hits:0,misses:0,combo:0,best:0,time:20,locked:false,interval:null};show("quiz");render()}
