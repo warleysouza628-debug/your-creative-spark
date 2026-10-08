@@ -25,6 +25,12 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Verify latest build
+        run: |
+          echo "Deploying commit: $GITHUB_SHA"
+          test -f index.html
+          grep -q "desafio-build" index.html
+          grep -q "DEUTSCHLAND" index.html
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
